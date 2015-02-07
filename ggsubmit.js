@@ -20,6 +20,52 @@ jQuery(document).ready(function() {
       html: '&shy;<style>' + style + '</style>'
     }).appendTo("body");    
   }
+  jQuery(".infusion-form").on("submit",function(){
+    if(typeof console === "undefined") {
+      var console = {
+        log: function() {},
+        debug: function() {},
+        info: function() {},
+        warn: function() {},
+        error: function() {}
+      };
+    }
+    jQuery('#errorDiv').fadeOut(); 
+    if(!jQuery('.infusion-submit').attr('validated')){
+      jQuery(".infusion-submit input").val("Submitting...");
+      jQuery(".infusion-submit input").prop("disabled",true);
+      jQuery(".infusion-submit button").text("Submitting...");
+      jQuery(".infusion-submit button").prop("disabled",true);
+      var data = jQuery('.infusion-form').serialize();
+      data = data + "&action=gg_infucaptcha_results";
+      dataType = 'json';
+      console.log(data);
+      jQuery.post(ggAjax.ajaxurl, data,function(response){
+        jQuery(".infusion-submit button").prop("disabled",false);
+        console.log(response);
+        if(response && response.success==true){
+           jQuery('.infusion-submit').attr('validated',true);
+           console.log(response.success);
+           jQuery(".infusion-form").unbind().submit();
+        } else {
+          var errorMsg;
+          if(response){
+            errorMsg = response.errorMsg;
+          } else {
+            errorMsg = 'there is a server configuration error';
+          }
+          jQuery(".infusion-submit input").prop("disabled",false);
+          jQuery(".infusion-submit input").val(response.inf_inputText);
+          jQuery(".infusion-submit button").prop("disabled",false);
+          jQuery(".infusion-submit button").text(response.inf_buttonText);
+          jQuery('#errorDiv').html(response.errorMsg);
+          jQuery('#errorDiv').fadeIn();
+        }   
+      },dataType);
+    return false;
+    }
+   return true;
+  });
   ggAddStyle('.invalid input:required:invalid { border:2px solid red; }');
   function hasHtml5Validation () {
     return typeof document.createElement('input').checkValidity === 'function';
@@ -35,34 +81,4 @@ jQuery(document).ready(function() {
       }
     }));
   }
-  jQuery(".infusion-form").on("submit",function(){
-    jQuery('#errorDiv').fadeOut(); 
-    if(!jQuery('.infusion-submit').attr('validated')){
-      jQuery(".infusion-submit input").val("Submitting...");
-      jQuery(".infusion-submit input").prop("disabled",true);
-      jQuery(".infusion-submit button").text("Submitting...");
-      jQuery(".infusion-submit button").prop("disabled",true);
-      var data = jQuery('.infusion-form').serialize();
-      data = data + "&action=gg_infucaptcha_results";
-      dataType = 'json';
-      //console.log(data);
-      jQuery.post(ggAjax.ajaxurl, data,function(response){
-        jQuery(".infusion-submit button").prop("disabled",false);
-        if(response.success==true){
-           jQuery('.infusion-submit').attr('validated',true);
-           jQuery(".infusion-form").unbind().submit();
-        } else {
-          var errorMsg = response.errorMsg;
-          jQuery(".infusion-submit input").prop("disabled",false);
-          jQuery(".infusion-submit input").val(response.inf_inputText);
-          jQuery(".infusion-submit button").prop("disabled",false);
-          jQuery(".infusion-submit button").text(response.inf_buttonText);
-          jQuery('#errorDiv').html(response.errorMsg);
-          jQuery('#errorDiv').fadeIn();
-        }   
-      },dataType);
-    return false;
-    }
-   return true;
-  });
 });

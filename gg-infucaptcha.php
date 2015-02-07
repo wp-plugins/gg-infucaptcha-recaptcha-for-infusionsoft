@@ -3,7 +3,7 @@
  * Plugin Name: Geek Goddess InfuCaptcha
  * Plugin URI: https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin
  * Description: Adds a Google reCaptcha v2 to Infusionsoft web forms
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Jaime Lerner - the Geek Goddess
  * Author URI: https://www.geekgoddess.com
  * License: GPL2
@@ -21,7 +21,7 @@ function gg_register_jscript() {
   global $googleLang, $googlePublic, $googleTheme;
   $lang = (empty($googleLang)) ? "" : "?hl=$googleLang";
   wp_register_script("google-recaptcha", "https://www.google.com/recaptcha/api.js"."$lang", array(), '', true);
-	wp_register_script( 'gg-submit', plugins_url( 'ggsubmit.js' , __FILE__ ), array('jquery'), '1.0.0', true );
+	wp_register_script( 'gg-submit', plugins_url( 'ggsubmit.js' , __FILE__ ), array('jquery'), '1.0.1', true );
   wp_localize_script( 'gg-submit', 'ggAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'googleLang' => "$googleLang", 'googlePublic' => "$googlePublic" , 'googleTheme' => "$googleTheme") );
 }
 
@@ -99,14 +99,13 @@ function gg_infucaptcha_processor(){
   $reCaptcha = new ReCaptcha($secret);
   if ($_POST["g-recaptcha-response"]) {
     $resp = $reCaptcha->verifyResponse($_SERVER["REMOTE_ADDR"],$_POST["g-recaptcha-response"]);
-    echo json_encode($resp);
+    wp_send_json($resp);
   } else {
-   $data=$_POST;
-   $data['success']=false;
-   $data['errorMsg']=(empty($customErrorMessage)) ? "Oops! You Forgot to check the box above!" : $customErrorMessage;
-   echo json_encode($data);
-   }
- wp_die();
+    $data=$_POST;
+    $data['success']=false;
+    $data['errorMsg']=(empty($customErrorMessage)) ? "Please fill out the captcha" : $customErrorMessage;
+    wp_send_json($data);
+  }
 }
 add_action("wp_ajax_nopriv_gg_infucaptcha_results", "gg_infucaptcha_processor");
 add_action("wp_ajax_gg_infucaptcha_results", "gg_infucaptcha_processor");

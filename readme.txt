@@ -1,21 +1,21 @@
 === GG Infucaptcha reCaptcha for Infusionsoft ===
 Contributors: Geek Goddess
 Tags: infusionsoft, captcha, recaptcha, antispam
-Requires at least: 3.0.1
+Requires at least: 4.0
 Tested up to: 4.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Inserts reCAPTCHA into Infusionsoft web forms
+Inserts Google’s new reCAPTCHA into Infusionsoft web forms
 
 == Description ==
 
 Infusionsoft&reg; has a native captcha you can insert into web forms, but it's not user-friendly, blocks submissions, and is ugly. With the new reCAPTCHA API, Google has released a captcha that the bulk of your users will only have to check a box to pass, optimizing opt-ins while protecting you from inserting spam into your Infusionsoft automation.
 
-As a bonus, activating this plugin in an Infusionsoft web form will also set up HTML5 form validation for it.
+As a bonus, activating this plugin in an Infusionsoft web form will also set up basic HTML5 form validation for it.
 
-Tested in Firefox for Windows v14, Chrome for Windows v40, Internet Explorer for Windows v11, Chrome for Mac v40, Firefox for Mac v35, Safari for Mac v7.1., iOS v8.1 (iPhone and iPad), Android KitKat
+Requires PHP 5.2+ for json support
 
 == Installation ==
 
@@ -52,8 +52,17 @@ See the support page at <a href=“https://www.geekgoddess.com/recaptcha-for-inf
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.1 =
+
+* Updated json function call and added in error checking
+
+
+= 1.0.0 =
 
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Possible fix for json response error on some configurations
+
