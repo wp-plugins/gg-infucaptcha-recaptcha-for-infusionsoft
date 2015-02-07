@@ -4,7 +4,7 @@
  * Plugin URI: https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin
  * Description: Adds a Google reCaptcha v2 to Infusionsoft web forms
  * Version: 1.0.0
- * Author: Jaime Lerner
+ * Author: Jaime Lerner - the Geek Goddess
  * Author URI: https://www.geekgoddess.com
  * License: GPL2
  */
@@ -28,7 +28,7 @@ function gg_register_jscript() {
 add_action('admin_menu', 'gg_infucaptcha_plugin_menu');
 
 function gg_infucaptcha_plugin_menu() { 
-	add_menu_page('GG InfuCaptcha Settings', 'GG InfuCaptcha', 'administrator', 'gg-infucaptcha-plugin-settings', 'gg_infucaptcha_plugin_settings_page', ''.plugins_url('recaptcha.png', __FILE__).'',4);
+	add_menu_page('GG InfuCaptcha Settings', 'GG InfuCaptcha', 'administrator', 'gg-infucaptcha-plugin-settings', 'gg_infucaptcha_plugin_settings_page', ''.plugins_url('recaptcha.png', __FILE__).'');
 }
 
 function gg_infucaptcha_plugin_settings_page() {
@@ -103,7 +103,7 @@ function gg_infucaptcha_processor(){
   } else {
    $data=$_POST;
    $data['success']=false;
-   $data['errorMsg']=(empty($customErrorMessage)) ? "Please fill out the captcha" : $customErrorMessage;
+   $data['errorMsg']=(empty($customErrorMessage)) ? "Oops! You Forgot to check the box above!" : $customErrorMessage;
    echo json_encode($data);
    }
  wp_die();
