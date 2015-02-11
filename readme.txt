@@ -41,7 +41,7 @@ The plugin works by looking for certain markup in a standard Infusionsoft form. 
 
 At a bare minimum, you will need to have the "infusion-submit" class in an element before the submit button (i.e. a div), and the "infusion-form" class applied to the form element.
 
-See the support page at <a href=“https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin/“>https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin/</a> for more answers.
+See the support page at <a href="https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin/">https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin/</a> for more answers.
 
 == Screenshots ==
 
