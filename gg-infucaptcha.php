@@ -3,7 +3,7 @@
  * Plugin Name: Geek Goddess InfuCaptcha
  * Plugin URI: https://www.geekgoddess.com/recaptcha-for-infusionsoft-wordpress-plugin
  * Description: Adds a Google reCaptcha v2 to Infusionsoft web forms
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Jaime Lerner - the Geek Goddess
  * Author URI: https://www.geekgoddess.com
  * License: GPL2
@@ -28,8 +28,17 @@ function gg_register_jscript() {
 add_action('admin_menu', 'gg_infucaptcha_plugin_menu');
 
 function gg_infucaptcha_plugin_menu() { 
-	add_menu_page('GG InfuCaptcha Settings', 'GG InfuCaptcha', 'administrator', 'gg-infucaptcha-plugin-settings', 'gg_infucaptcha_plugin_settings_page', ''.plugins_url('recaptcha.png', __FILE__).'');
+	add_options_page('GG InfuCaptcha Settings', 'GG InfuCaptcha', 'administrator', 'gg-infucaptcha-plugin-settings', 'gg_infucaptcha_plugin_settings_page', ''.plugins_url('recaptcha.png', __FILE__).'');
 }
+
+// Add settings link on plugin page
+function gg_infucaptcha_settings_link($links) { 
+  $settings_link = '<a href="options-general.php?page=gg-infucaptcha-plugin-settings">Settings</a>'; 
+  array_unshift($links, $settings_link); 
+  return $links; 
+}
+$plugin = plugin_basename(__FILE__); 
+add_filter("plugin_action_links_$plugin", 'gg_infucaptcha_settings_link' );
 
 function gg_infucaptcha_plugin_settings_page() {
   global $customErrorMessage, $googlePublic, $googleSecret, $googleLang, $googleTheme;
