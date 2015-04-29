@@ -21,15 +21,7 @@ jQuery(document).ready(function() {
     }).appendTo("body");    
   }
   jQuery(".infusion-form").on("submit",function(){
-    if(typeof console === "undefined") {
-      var console = {
-        log: function() {},
-        debug: function() {},
-        info: function() {},
-        warn: function() {},
-        error: function() {}
-      };
-    }
+    if (!console) console = {log:function(){}}; // supress IE errors
     jQuery('#errorDiv').fadeOut(); 
     if(!jQuery('.infusion-submit').attr('validated')){
       jQuery(".infusion-submit input").val("Submitting...");
