@@ -52,6 +52,11 @@ See the support page at <a href="https://www.geekgoddess.com/recaptcha-for-infus
 
 == Changelog ==
 
+= 1.0.2 =
+
+* Updated error checking and moved plugin settings to plugin settings menu
+
+
 = 1.0.1 =
 
 * Updated json function call and added in error checking
